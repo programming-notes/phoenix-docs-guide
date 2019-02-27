@@ -18,6 +18,8 @@ defmodule HelloWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
+    resources "/posts", PostController, only: [:index, :show]
+    resources "/comments", CommentController, except: [:delete]
   end
 
   # Other scopes may use custom stacks.
