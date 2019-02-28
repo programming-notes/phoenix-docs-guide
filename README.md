@@ -1,20 +1,9 @@
-# Hello
-
-To start your Phoenix server:
-
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+# Phoenix Routing
+Routes can be configured in the `/lib/<project_name>_web/router.ex`. We can set up individual routes by putting code such as:
+```elixir
+get "/", PageController, :index
+```
+The routes are expanded by the `&match/5` function
+```elixir
+def match(:verb, "path", Controller, :action, options(s): :value)
+```
