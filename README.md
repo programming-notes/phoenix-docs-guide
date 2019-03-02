@@ -6,3 +6,11 @@
 * Gathers data using Ecto.
 
 ### Flash Messages
+* Useful for showing errors and other non-persistent messages to user.
+### Rendering functions:
+* render/2
+* render/3
+* text/2
+* json/2
+* html/2 - takes in a conn and html string to render html without layout.
+* assign/3 - takes in a `conn`, `symbol` and `value` and to pass key-value into the output conn.

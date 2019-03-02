@@ -5,6 +5,8 @@ defmodule HelloWeb.PageController do
     conn
     |> put_flash(:info, "Welcome to Phoenix, from flash info!")
     |> put_flash(:error, "This is a make-believe error!")
+    |> assign(:message, "Message passed in from assign")
+    |> assign(:name, "Another value passed in from assign")
     |> render("index.html")
   end
 
