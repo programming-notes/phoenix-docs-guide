@@ -18,3 +18,6 @@
 
 ### Assigning Layouts:
 * put_layout/2 - accepts either a boolean or name of layout.html file to render.
+
+### Overriding Render Formats
+* We can configure what format to distribute but adding that format type to the accepts key.

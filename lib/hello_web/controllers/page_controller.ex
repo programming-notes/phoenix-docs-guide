@@ -10,7 +10,7 @@ defmodule HelloWeb.PageController do
     |> assign(:message, "Message passed in from assign")
     |> assign(:name, "Another value passed in from assign")
     |> assign(:default_message, "Original value passed in by plug was over written")
-    |> render("index.html")
+    |> render(:index)
   end
 
   def show(conn, %{"id" => id}) do

@@ -1,0 +1,4 @@
+Some Text
+This is a message set using plug: <%= @default_message %>
+This is a message set using assign: <%= @message %>
+This is a message set using assign: <%= @name %>
