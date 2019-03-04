@@ -5,6 +5,9 @@
   <hr />
   <p><%= @message %></p>
   <p><%= @name %></p>
+  <%= if @default_message do %>  
+    <p><%= @default_message %></p>
+  <% end %>
 </section>
 
 </section>
