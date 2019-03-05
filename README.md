@@ -1,36 +1,10 @@
-# Controllers
-
-### Actions
-* Are just functions that accepts request data and params and returns a response.
-* Can be named anything but makes life easier if we follow RESTful conventions.
-* Gathers data using Ecto.
-
-### Flash Messages
-* Useful for showing errors and other non-persistent messages to user.
-
-### Rendering functions:
-* render/2
-* render/3
-* text/2
-* json/2
-* html/2 - takes in a conn and html string to render html without layout.
-* assign/3 - takes in a `conn`, `symbol` and `value` and to pass key-value into the output conn.
-
-### Assigning Layouts:
-* put_layout/2 - accepts either a boolean or name of layout.html file to render.
-
-### Overriding Render Formats
-* We can configure what format to distribute but adding that format type to the accepts key.
-
-### Redirecting inside controllers:
-internal:
-```elixir
-redirect(conn, to: Routes.route_helper(conn, :which_one))
-```
-external:
-```elixir
-redirect(conn, external: "https://externalwebsite.com")
-```
-
-### Action Fallback
-* Allows you to DRY up your error handling in the controller with plugs.
+# Views
+### Rendering Templates
+* The root directory of views can be altered by changing the value of `root` in `lib/<app_name>_web.ex`.
+* Phoenix applications by default has three view modules:
+  * ErrorView
+  * LayoutView
+  * PageView
+### Templates
+* functions defined in views are available in the template that is rendered by that view.
+* we can override the default view that is used in rendering by using render/3 instead of render/2.
