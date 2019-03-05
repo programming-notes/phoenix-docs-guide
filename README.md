@@ -21,3 +21,16 @@
 
 ### Overriding Render Formats
 * We can configure what format to distribute but adding that format type to the accepts key.
+
+### Redirecting inside controllers:
+internal:
+```elixir
+redirect(conn, to: Routes.route_helper(conn, :which_one))
+```
+external:
+```elixir
+redirect(conn, external: "https://externalwebsite.com")
+```
+
+### Action Fallback
+* Allows you to DRY up your error handling in the controller with plugs.
