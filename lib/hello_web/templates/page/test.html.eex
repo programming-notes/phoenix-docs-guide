@@ -2,6 +2,6 @@
   <p><%= handler_info(@conn) %></p>
   <h3>Keys for the conn Struct</h3>
   <%= for key <- connection_keys @conn do %>
-    <p><%= render "key.html", key: key %></p>
+    <p><%= render HelloWeb.SharedView, "key.html", key: key %></p>
   <% end %>
 </div>
