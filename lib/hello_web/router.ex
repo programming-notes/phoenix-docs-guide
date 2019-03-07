@@ -16,6 +16,7 @@ defmodule HelloWeb.Router do
   scope "/", HelloWeb do
     pipe_through :browser
     get "/", PageController, :index
+    get "/test", PageController, :test
     get "/:id", PageController, :show
   end
 end

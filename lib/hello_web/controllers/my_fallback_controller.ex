@@ -3,8 +3,6 @@ defmodule HelloWeb.MyFallbackController do
   
   def call(conn, error) do
     conn
-    |> put_status(422)
-    |> put_view(HelloWeb.ErrorView)
-    |> render(conn)
+    |> render(:"500")
   end
 end
