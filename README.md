@@ -18,6 +18,13 @@ Broadcast Signal --> Local PubSub ----< Clients
                           +------------< Remote PubSubs ---< Clients
 ```
 
-### Endpoint
+#### Joining Channels
+1. Authorize clients to joing a given topic.
+2. Topics are created using `join/3`.
+3. The responses should be:
+  * {:ok, socket} - for granting access
+  * {:ok, reply, socket} - grants access and a message
+  * {:error, reply} - deny access
+
 
 
