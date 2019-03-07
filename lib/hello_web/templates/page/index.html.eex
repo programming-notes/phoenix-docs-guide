@@ -3,11 +3,7 @@
 
   <p>A productive web framework that<br/>does not compromise speed and maintainability.</p>
   <hr />
-  <p><%= @message %></p>
-  <p><%= @name %></p>
-  <%= if @default_message do %>  
-    <p><%= @default_message %></p>
-  <% end %>
+
   <p><a href="<%= Routes.page_path(@conn, :index) %>">Link back to this page</a></p>
 </section>
 
