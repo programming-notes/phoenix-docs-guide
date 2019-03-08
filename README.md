@@ -19,12 +19,13 @@ Broadcast Signal --> Local PubSub ----< Clients
 ```
 
 #### Joining Channels
-1. Authorize clients to joing a given topic.
+1. Authorize clients to joining a given topic.
 2. Topics are created using `join/3`.
 3. The responses should be:
   * {:ok, socket} - for granting access
   * {:ok, reply, socket} - grants access and a message
   * {:error, reply} - deny access
-
+4. `handle_in/3` allows us to handle incoming messages from the client.
+5. `handle_out/3` is optional but allows for powerful customization and filtering of out going messages. This function is called for every recipient of a message.
 
 
