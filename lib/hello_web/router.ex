@@ -17,6 +17,7 @@ defmodule HelloWeb.Router do
   scope "/", HelloWeb do
     pipe_through :browser
     get "/", PageController, :index
+    resources "/users", UserController
   end
 
   defp put_user_token(conn, _) do
