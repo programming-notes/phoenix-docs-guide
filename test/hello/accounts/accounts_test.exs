@@ -63,4 +63,63 @@ defmodule Hello.AccountsTest do
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
   end
+
+  describe "credentials" do
+    alias Hello.Accounts.Credentials
+
+    @valid_attrs %{email: "some email"}
+    @update_attrs %{email: "some updated email"}
+    @invalid_attrs %{email: nil}
+
+    def credentials_fixture(attrs \\ %{}) do
+      {:ok, credentials} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Accounts.create_credentials()
+
+      credentials
+    end
+
+    test "list_credentials/0 returns all credentials" do
+      credentials = credentials_fixture()
+      assert Accounts.list_credentials() == [credentials]
+    end
+
+    test "get_credentials!/1 returns the credentials with given id" do
+      credentials = credentials_fixture()
+      assert Accounts.get_credentials!(credentials.id) == credentials
+    end
+
+    test "create_credentials/1 with valid data creates a credentials" do
+      assert {:ok, %Credentials{} = credentials} = Accounts.create_credentials(@valid_attrs)
+      assert credentials.email == "some email"
+    end
+
+    test "create_credentials/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_credentials(@invalid_attrs)
+    end
+
+    test "update_credentials/2 with valid data updates the credentials" do
+      credentials = credentials_fixture()
+      assert {:ok, %Credentials{} = credentials} = Accounts.update_credentials(credentials, @update_attrs)
+      assert credentials.email == "some updated email"
+    end
+
+    test "update_credentials/2 with invalid data returns error changeset" do
+      credentials = credentials_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_credentials(credentials, @invalid_attrs)
+      assert credentials == Accounts.get_credentials!(credentials.id)
+    end
+
+    test "delete_credentials/1 deletes the credentials" do
+      credentials = credentials_fixture()
+      assert {:ok, %Credentials{}} = Accounts.delete_credentials(credentials)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_credentials!(credentials.id) end
+    end
+
+    test "change_credentials/1 returns a credentials changeset" do
+      credentials = credentials_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_credentials(credentials)
+    end
+  end
 end
