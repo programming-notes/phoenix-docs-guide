@@ -6,7 +6,7 @@ defmodule Hello.Accounts do
   import Ecto.Query, warn: false
   alias Hello.Repo
 
-  alias Hello.Accounts.User
+  alias Hello.Accounts.{User, Credential}
 
   @doc """
   Returns the list of users.
@@ -58,6 +58,7 @@ defmodule Hello.Accounts do
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.insert()
   end
 
@@ -76,6 +77,7 @@ defmodule Hello.Accounts do
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
+    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.update()
   end
 
@@ -108,99 +110,109 @@ defmodule Hello.Accounts do
     User.changeset(user, %{})
   end
 
-  alias Hello.Accounts.Credentials
-
   @doc """
   Returns the list of credentials.
 
   ## Examples
 
       iex> list_credentials()
-      [%Credentials{}, ...]
+      [%Credential{}, ...]
 
   """
   def list_credentials do
-    Repo.all(Credentials)
+    Repo.all(Credential)
   end
 
   @doc """
   Gets a single credentials.
 
-  Raises `Ecto.NoResultsError` if the Credentials does not exist.
+  Raises `Ecto.NoResultsError` if the Credential does not exist.
 
   ## Examples
 
       iex> get_credentials!(123)
-      %Credentials{}
+      %Credential{}
 
       iex> get_credentials!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_credentials!(id), do: Repo.get!(Credentials, id)
+  def get_credential!(id), do: Repo.get!(Credential, id)
 
   @doc """
-  Creates a credentials.
+  Creates a credential.
 
   ## Examples
 
-      iex> create_credentials(%{field: value})
-      {:ok, %Credentials{}}
+      iex> create_credential(%{field: value})
+      {:ok, %Credential{}}
 
-      iex> create_credentials(%{field: bad_value})
+      iex> create_credential(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_credentials(attrs \\ %{}) do
-    %Credentials{}
-    |> Credentials.changeset(attrs)
+  def create_credential(attrs \\ %{}) do
+    %Credential{}
+    |> Credential.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a credentials.
+  Updates a credential.
 
   ## Examples
 
-      iex> update_credentials(credentials, %{field: new_value})
-      {:ok, %Credentials{}}
+      iex> update_credential(credential, %{field: new_value})
+      {:ok, %Credential{}}
 
-      iex> update_credentials(credentials, %{field: bad_value})
+      iex> update_credential(credential, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_credentials(%Credentials{} = credentials, attrs) do
-    credentials
-    |> Credentials.changeset(attrs)
+  def update_credential(%Credential{} = credential, attrs) do
+    credential
+    |> Credential.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Credentials.
+  Deletes a Credential.
 
   ## Examples
 
-      iex> delete_credentials(credentials)
-      {:ok, %Credentials{}}
+      iex> delete_credential(credential)
+      {:ok, %Credential{}}
 
-      iex> delete_credentials(credentials)
+      iex> delete_credential(credential)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_credentials(%Credentials{} = credentials) do
-    Repo.delete(credentials)
+  def delete_credential(%Credential{} = credential) do
+    Repo.delete(credential)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking credentials changes.
+  Returns an `%Ecto.Changeset{}` for tracking credential changes.
 
   ## Examples
 
-      iex> change_credentials(credentials)
-      %Ecto.Changeset{source: %Credentials{}}
+      iex> change_credential(credential)
+      %Ecto.Changeset{source: %Credential{}}
 
   """
-  def change_credentials(%Credentials{} = credentials) do
-    Credentials.changeset(credentials, %{})
+  def change_credential(%Credential{} = credential) do
+    Credential.changeset(credential, %{})
+  end
+
+  def authenticate_by_email_password(email, _password) do
+    query =
+      from u in User,
+        inner_join: c in assoc(u, :credential),
+        where: c.email == ^email
+    
+    case Repo.one(query) do
+      %User{} = user -> {:ok, user}
+      nil -> {:error, :unauthorized}
+    end
   end
 end

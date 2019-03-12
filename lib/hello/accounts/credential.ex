@@ -1,4 +1,4 @@
-defmodule Hello.Accounts.Credentials do
+defmodule Hello.Accounts.Credential do
   use Ecto.Schema
   import Ecto.Changeset
   alias Hello.Accounts.User
